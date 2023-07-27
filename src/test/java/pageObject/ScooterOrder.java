@@ -1,6 +1,7 @@
 package pageobject;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -65,147 +66,58 @@ public class ScooterOrder {
     private final String addressP;
     private final String phoneP;
     private final String commentP;
+    private final String browserP;
+    private final String buttonP;
 
 
 
 
-    public ScooterOrder(String nameP, String surnameP, String addressP, String phoneP, String commentP) {
+
+    public ScooterOrder(String nameP, String surnameP, String addressP, String phoneP, String commentP, String browserP, String buttonP) {
         this.nameP = nameP;
         this.surnameP = surnameP;
         this.addressP = addressP;
         this.phoneP = phoneP;
         this.commentP = commentP;
+        this.browserP = browserP;
+        this.buttonP = buttonP;
     }
 
     @Parameterized.Parameters // добавили аннотацию
-    public static Object[][] getSumData() {
+    public static Object[][] getFields() {
         return new Object[][] {
-                { "Елена", "Комова", "г.Москва, Делегатская, 56С", "+79222225555","Созвониться" },
-                { "Никита", "Петров", "г.Москва, Бориса Голушкина", "+79226622555","Оставить у двери"},
+                { "Елена", "Комова", "г.Москва, Делегатская, 56С", "+79222225555","Созвониться", "Chrome", "//*[@id=\"root\"]/div/div/div[1]/div[2]/button[1]" },
+                { "Никита", "Петров", "г.Москва, Бориса Голушкина", "+79226622555","Оставить у двери", "Firefox", "//*[@id=\"root\"]/div/div/div[1]/div[2]/button[1]"},
         };
     }
-
-
-
-
-
-
-    @Test
-    public void OrderButtom_Upper_Click_Chrome() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.findElement(yesСookiesButton).click();
-        driver.findElement(orderButtonUpper).click();
-    }
-    @Test
-    public void OrderButtom_Upper_Click_Firefox() {
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.findElement(yesСookiesButton).click();
-        driver.findElement(orderButtonUpper).click();
+    // выбор браузера
+    public void browser () {
+        if (browserP.equalsIgnoreCase("Chrome")) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+            driver = new ChromeDriver(options);
+        } else {
+            FirefoxOptions options = new FirefoxOptions();
+            driver = new FirefoxDriver(options);
+         }
     }
 
-    @Test
-    public void OrderButtom_Lower_Click_Chrome() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
+    @Before
+    public void before() {
+        browser();
         driver.get("https://qa-scooter.praktikum-services.ru/");
         driver.findElement(yesСookiesButton).click();
-        driver.findElement(orderButtonLower).click();
     }
 
+    // форма заказа
     @Test
-    public void OrderButtom_Lower_Click_Firefox() {
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.findElement(yesСookiesButton).click();
-        driver.findElement(orderButtonLower).click();
-    }
-    // форма заказа в Chrome
-    @Test
-    public void FormOrderFill_Chrome() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        driver = new ChromeDriver(options);
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-        driver.findElement(orderButtonUpper).click();
+    public void formOrderFill() {
+
+
+        driver.findElement(By.xpath(buttonP)).click();
 
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.findElement(By.id("rcc-confirm-button")).click();
-        WebElement name = driver.findElement(namePom);
-        name.clear();
-        name.sendKeys(nameP);
 
-        WebElement surname = driver.findElement(surnamePom);
-        surname.clear();
-        surname.sendKeys(surnameP);
-
-        WebElement address = driver.findElement(addressPom);
-        address.clear();
-        address.sendKeys(addressP);
-
-        WebElement metro = driver.findElement(metroPom);
-        metro.click();
-        WebElement metroSt = driver.findElement(metroStPom);
-        metroSt.click();
-        WebElement phone = driver.findElement(phonePom);
-        phone.clear();
-        phone.sendKeys(phoneP);
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        driver.findElement(nextButton).click();
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        WebElement day = driver.findElement(dayPom);
-        day.clear();
-        day.click();
-        WebElement dayChoice = driver.findElement(dayChoicePom);
-        dayChoice.click();
-
-        WebElement time = driver.findElement(timePom);
-        time.click();
-        WebElement timeChoice = driver.findElement(timeChoicePom);
-        timeChoice.click();
-
-        WebElement colorScooter = driver.findElement(colorScooterGreyPom);
-        colorScooter.click();
-
-        WebElement comment = driver.findElement(commentPom);
-        comment.clear();
-        comment.sendKeys(commentP);
-
-        driver.findElement(orderButton).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
-        driver.findElement(yesButton).click();
-
-
-        WebElement status = driver.findElement(By.xpath("/html/body/div/div/div[2]/div[5]/div[1]"));
-        String StatusS = status.getText();
-        assertTrue(StatusS.contains("Заказ оформлен"));
-        System.out.println("Тест выполнился. Результат оформления заказа: \n" +StatusS);
-
-    }
-
-    // форма заказа в Firefox
-    @Test
-    public void FormOrderFill_Firefox() {
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
-        options.addArguments("-headless");
-        driver.get("https://qa-scooter.praktikum-services.ru/");
-
-        driver.findElement(orderButtonUpper).click();
-
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.findElement(By.id("rcc-confirm-button")).click();
         WebElement name = driver.findElement(namePom);
         name.clear();
         name.sendKeys(nameP);
