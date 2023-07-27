@@ -1,4 +1,4 @@
-package pageobject;
+package page;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
-import static pageObject.PageObject.*;
+import static page.PageObject.*;
 
 @RunWith(Parameterized.class)
 public class ScooterOrder {
@@ -44,25 +44,25 @@ public class ScooterOrder {
 
     @Parameterized.Parameters // добавили аннотацию
     public static Object[][] getFields() {
+
         return new Object[][]{
-                {"Елена", "Комова", "г.Москва, Делегатская, 56С", "+79222225555", "Созвониться", "Chrome", "//*[@id=\"root\"]/div/div/div[1]/div[2]/button[1]"},
-                {"Никита", "Петров", "г.Москва, Бориса Голушкина", "+79226622555", "Оставить у двери", "Firefox", "//*[@id=\"root\"]/div/div/div[4]/div[2]/div[5]/button"},
+                {"Елена", "Комова", "г.Москва, Делегатская, 56С", "+79222225555", "Созвониться", "Chrome", "1"},
+                {"Никита", "Петров", "г.Москва, Бориса Голушкина", "+79226622555", "Оставить у двери", "Firefox", "2"},
         };
     }
 
     @Before
     public void before() {
-        driver = pageobject.Common.browser(browser);
+        driver = Common.browser(browser);
         driver.get("https://qa-scooter.praktikum-services.ru/");
         driver.findElement(yesСookiesButton).click();
+        Common.button(buttonP);
     }
 
     // форма заказа
     @Test
     public void formOrderFill() {
 
-
-        driver.findElement(By.xpath(buttonP)).click();
 
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 

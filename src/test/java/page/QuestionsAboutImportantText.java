@@ -1,4 +1,4 @@
-package pageobject;
+package page;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,11 +8,12 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import page.Common;
 
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.assertTrue;
-import static pageObject.PageObject.*;
+import static page.PageObject.*;
 
 @RunWith(Parameterized.class)
 public class QuestionsAboutImportantText {
@@ -58,7 +59,7 @@ public class QuestionsAboutImportantText {
 
     @Before
     public void before() {
-        driver = pageobject.Common.browser(browser);
+        driver = Common.browser(browser);
         driver.get("https://qa-scooter.praktikum-services.ru/");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(yesСookiesButton).click();
