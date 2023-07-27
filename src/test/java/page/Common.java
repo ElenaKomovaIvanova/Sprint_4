@@ -36,7 +36,6 @@ public class Common {
         } else if ((button.equalsIgnoreCase("2"))) {
            driver.findElement(orderButtonLower).click();
         }
-
    }
 
 }
