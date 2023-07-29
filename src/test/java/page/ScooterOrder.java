@@ -56,6 +56,7 @@ public class ScooterOrder {
         driver = Common.browser(browser);
         driver.get("https://qa-scooter.praktikum-services.ru/");
         driver.findElement(yesСookiesButton).click();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         Common.button(buttonP);
     }
 
@@ -64,7 +65,6 @@ public class ScooterOrder {
     public void formOrderFill() {
 
 
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         WebElement name = driver.findElement(namePom);
         name.clear();
@@ -86,11 +86,7 @@ public class ScooterOrder {
         phone.clear();
         phone.sendKeys(phoneP);
 
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
         driver.findElement(nextButton).click();
-
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         WebElement day = driver.findElement(dayPom);
         day.clear();
@@ -111,7 +107,6 @@ public class ScooterOrder {
         comment.sendKeys(commentP);
 
         driver.findElement(orderButton).click();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         driver.findElement(yesButton).click();
 

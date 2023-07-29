@@ -12,11 +12,7 @@ import static page.PageObject.orderButtonUpper;
 
 public class Common {
     private static WebDriver driver;
-    //public static String browser;
-//
-//    public Common(String browser) {
-//    this.browser = browser;
-//    }
+
 
     public static WebDriver browser(String browser) {
         if (browser.equalsIgnoreCase("Chrome")) {

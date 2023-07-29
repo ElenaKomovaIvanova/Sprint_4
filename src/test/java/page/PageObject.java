@@ -44,5 +44,24 @@ public class PageObject {
     public static By yesButton = By.xpath(".//button[text()=\"Да\"]");
     // Локатор для статуса
     public static By statusPom = By.xpath("/html/body/div/div/div[2]/div[5]/div[1]");
+    // Локаторы для вопросов и ответов
+    public static By question1 = By.id("accordion__heading-0");
+    public static By question2 = By.id("accordion__heading-1");
+    public static By question3 = By.id("accordion__heading-2");
+    public static By question4 = By.id("accordion__heading-3");
+    public static By question5 = By.id("accordion__heading-4");
+    public static By question6 = By.id("accordion__heading-5");
+    public static By question7 = By.id("accordion__heading-6");
+    public static By question8 = By.id("accordion__heading-7");
+    public static By answer1 = By.id("accordion__panel-0");
+    public static By answer2 = By.id("accordion__panel-1");
+    public static By answer3 = By.id("accordion__panel-2");
+    public static By answer4 = By.id("accordion__panel-3");
+    public static By answer5 = By.id("accordion__panel-4");
+    public static By answer6 = By.id("accordion__panel-5");
+    public static By answer7 = By.id("accordion__panel-6");
+    public static By answer8 = By.id("accordion__panel-7");
+
+
 
 }
